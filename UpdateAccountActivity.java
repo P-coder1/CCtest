@@ -1,9 +1,5 @@
 package com.obliging.story;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,19 +10,21 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.auth.User;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
-
 
 
 public class UpdateAccountActivity extends AppCompatActivity {
@@ -99,14 +97,14 @@ public class UpdateAccountActivity extends AppCompatActivity {
             uri=result.getUri();
 
             Picasso.with(this).load(uri).into(dp);
-            imgref = firebaseStorage.getReference().child("ProfileImages").child(userid).child("/Images.jpg");
+            imgref = firebaseStorage.getReference().child("ProfileImages").child(userid).child("/Images.png");
             Task<Uri> urlTask = imgref.putFile(uri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                     if (!task.isSuccessful()) {
                         throw task.getException();
                     }
-                    Toast.makeText(UpdateAccountActivity.this, "Dp Upload Success", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(UpdateAccountActivity.this, "업로드 성공", Toast.LENGTH_SHORT).show();
 
                     // Continue with the task to get the download URL
                     return imgref.getDownloadUrl();
