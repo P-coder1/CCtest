@@ -22,14 +22,14 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 public class AddBlogActivity extends AppCompatActivity {
-    EditText title,blog;
-    Button post;
-    FirebaseDatabase firebaseDatabase;
-    FirebaseStorage firebaseStorage ;
-    DatabaseReference storyRef,userRef;
-    FirebaseAuth firebaseAuth;
-    FirebaseUser firebaseUser;
-    StorageReference storageReference;
+    private EditText title,blog;
+    private Button post;
+    private FirebaseDatabase firebaseDatabase;
+    private FirebaseStorage firebaseStorage ;
+    private DatabaseReference storyRef,userRef;
+    private FirebaseAuth firebaseAuth;
+    private FirebaseUser firebaseUser;
+    private StorageReference storageReference;
 
     //새로 추가한 소스--------------------
     class Board{
@@ -60,8 +60,13 @@ public class AddBlogActivity extends AppCompatActivity {
         FirebaseStorage imageRef = FirebaseStorage.getInstance();
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
-        userRef = FirebaseDatabase.getInstance().getReference().child("Users").child(firebaseUser.getUid());
-        final StorageReference dpImageRef = imageRef.getReference().child("ProfileImages").child(firebaseUser.getUid()).child("Images.jpg");
+        userRef = FirebaseDatabase.getInstance().getReference().child("ProfileImages").child(firebaseUser.getUid());
+        final StorageReference dpImageRef = imageRef.getReference()
+                .child("ProfileImages")
+                .child(firebaseUser.getUid())
+                .child("Images.png");
+                //.child(imagePath)
+                //.getFile(localFile)
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

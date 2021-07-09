@@ -68,13 +68,13 @@ public class UpdateAccountActivity extends AppCompatActivity {
                startActivityForResult(galleryPick,gallerycode);
             }
         } );
-        //사용자 닉네임 생성 및 수정
+        //사용자 닉네임 생성
         nxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String UserName = usrName.getText().toString();
                 if (UserName.isEmpty()){
-                    usrName.setError("Pick A UserName");
+                    usrName.setError("사용할 이름을 선택하세요");
                 }
                 else {
                     firebaseDatabase.getReference("Users").child(userid).child("UserName").setValue(UserName);
@@ -97,7 +97,7 @@ public class UpdateAccountActivity extends AppCompatActivity {
             uri=result.getUri();
 
             Picasso.with(this).load(uri).into(dp);
-            imgref = firebaseStorage.getReference().child("ProfileImages").child(userid).child("/Images.png");
+            imgref = firebaseStorage.getReference().child("ProfileImages").child(userid).child("images/Images.png");
             Task<Uri> urlTask = imgref.putFile(uri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                 @Override
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
